@@ -30,13 +30,40 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
     private var wrongCount: Int = 0
 
 
+    override fun onPause() {
+        super.onPause()
+        objectAnimator?.isRunning.let {
+            objectAnimator?.pause()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        objectAnimator?.isRunning.let {
+            objectAnimator?.resume()
+        }
+    }
+
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.correct_btn -> {
-
+                if (isCorrectVisible()) {
+                    updateCorrectCount()
+                    setNewWord()
+                } else {
+                    updateWrongCount()
+                    setNewTranslationWord()
+                }
             }
             R.id.wrong_btn -> {
-
+                if (isCorrectVisible()) {
+                    updateWrongCount()
+                    setNewWord()
+                } else {
+                    updateCorrectCount()
+                    setNewTranslationWord()
+                }
             }
 
         }
@@ -65,6 +92,13 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
     }
 
     override fun onAnimationEnd(animation: Animator?) {
+        //reset the animation, get new words & update counts
+        updateUnAnsweredCount()
+        if (isCorrectVisible()) {
+            setNewWord()
+            return
+        }
+        setNewTranslationWord()
 
     }
 
@@ -115,6 +149,46 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
     //get the next option for choosing
     fun getNextTranslation(): Word {
         return getRandomUniqueWord(true)
+    }
+
+    //set the next word to begin next choices, also having logic of which learning you choose
+    private fun setNewWord() {
+        currentWord = getNextWord()
+        if (toLearnEnglish) {
+            word.text = currentWord?.word1
+        } else {
+            word.text = currentWord?.word2
+        }
+        setNewTranslationWord()
+    }
+
+    //set the next word's translation, also having logic of which learning you choose
+    private fun setNewTranslationWord() {
+        if(toLearnEnglish) {
+            currentTranslationOption = getNextTranslation().word2
+        } else {
+            currentTranslationOption = getNextTranslation().word1
+        }
+        translation_text.text = currentTranslationOption
+        animateTranslationText()
+    }
+
+    //animate the new translation from top to bottom
+    private fun animateTranslationText() {
+        startAnimation()
+    }
+
+    //starting animation and handle timer
+    private fun startAnimation() {
+        stopAnimation()
+        objectAnimator?.start()
+    }
+
+    //stopping animation on textView
+    private fun stopAnimation() {
+        objectAnimator?.isRunning?.let {
+            translation_text.clearAnimation()
+        }
     }
 
     //updating count
