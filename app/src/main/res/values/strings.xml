@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Falling Words Game</string>
     <string name="action_settings">Settings</string>
+    <string name="correct">Correct</string>
+    <string name="wrong">Wrong</string>
+    <string name="missedTitle">Missed:</string>
+    <string name="wrongTitle">Wrong:</string>
+    <string name="correctTitle">Correct:</string>
+    <string name="zero_value">0</string>
+    <string name="no_internet">No Internet Connected</string>
+    <string name="retry">Retry</string>
+    <string name="game_over">Game Over</string>
+    <string name="game_hint">Word in a center of screen will have floating translation from top to bottom.      You will have to choose either the floating word is correct translation or not.     We will change the word if you choose correct translation OR the correct translation passes by.\n P.S: You will have only 20 attempts</string>
+    <string name="learn_english">Learn English</string>
+    <string name="learn_spa">Learn Spanish</string>
+    <string name="game_play">Game Play</string>
 </resources>
