@@ -164,7 +164,7 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
     }
 
     //get the next unique word for game, randomly picked from data set
-    //logic limited right now
+    //logic limited right now, might be repetition occurs
     private fun getRandomUniqueWord(isForTranslation: Boolean): Word {
 
         val random = Random(System.currentTimeMillis())
@@ -286,7 +286,7 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
         })
         LocalBroadcastManager.getInstance(this).registerReceiver(
             mCounterReceiver,
-            IntentFilter(AppConstants.FILTER_ON_TICK)
+            IntentFilter(AppConstants.INTENT_FILTER_ON_TICK)
         )
     }
 

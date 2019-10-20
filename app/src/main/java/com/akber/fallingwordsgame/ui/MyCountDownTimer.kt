@@ -34,7 +34,7 @@ class MyCountDownTimer(upTo: Long, interval: Long,var context: Context?) :
     //broadcast the timer countdown
     //can handle through callbacks as well
     private fun sendTickToObservers(tick: String) {
-        val intent = Intent(AppConstants.FILTER_ON_TICK)
+        val intent = Intent(AppConstants.INTENT_FILTER_ON_TICK)
         intent.putExtra("message", tick)
         LocalBroadcastManager.getInstance(context!!).sendBroadcast(intent)
     }
