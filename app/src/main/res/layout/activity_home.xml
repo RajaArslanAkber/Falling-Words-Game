@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bordered_rectangle"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_medium">
+
+
+    <TextView
+        android:id="@+id/play_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:text="@string/game_play"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/hint_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/play_text"
+        android:layout_marginTop="@dimen/padding_medium"
+        android:gravity="start"
+        android:text="@string/game_hint"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_large" />
+
+
+    <Button
+        android:id="@+id/eng_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bordered_rectangle"
+        android:text="@string/learn_english"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/spa_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eng_btn"
+        android:layout_marginTop="@dimen/padding_medium"
+        android:background="@drawable/bordered_rectangle"
+        android:text="@string/learn_spa"
+        android:textAllCaps="false" />
+
+
+</RelativeLayout>
