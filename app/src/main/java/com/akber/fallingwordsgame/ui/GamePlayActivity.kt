@@ -215,6 +215,8 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
     //starting animation and handle timer
     private fun startAnimation() {
         stopAnimation()
+        timer?.cancelTimer()
+        timer?.startTimer()
         objectAnimator?.start()
     }
 
