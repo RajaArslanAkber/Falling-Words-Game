@@ -10,7 +10,7 @@
     <string name="no_internet">No Internet Connected</string>
     <string name="retry">Retry</string>
     <string name="game_over">Game Over</string>
-    <string name="game_hint">Word in a center of screen will have floating translation from top to bottom.      You will have to choose either the floating word is correct translation or not.     We will change the word if you choose correct translation OR the correct translation passes by.\nP.S: You will have only 20 attempts</string>
+    <string name="game_hint">Word in a center of screen will have floating translation from top to bottom.      You will have to choose either the floating word is correct translation or not.     We will change the word if you choose correct translation OR the correct translation passes by.\nP.S: You will have only 25 attempts</string>
     <string name="learn_english">Learn English</string>
     <string name="learn_spa">Learn Spanish</string>
     <string name="game_play">Game Play</string>

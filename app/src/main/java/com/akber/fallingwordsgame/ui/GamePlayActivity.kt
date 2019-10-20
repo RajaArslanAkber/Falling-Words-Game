@@ -258,8 +258,12 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
         finish()
     }
 
+    //showing  results to user & giving option to play again
     private fun startResultActivity() {
-
+        val intent = Intent(this@GamePlayActivity, ResultActivity::class.java)
+        intent.putExtra(ResultActivity.ARG_TOTAL_COUNT, GAME_LIFE.toString())
+        intent.putExtra(ResultActivity.ARG_CORRECT_COUNT, correctCount.toString())
+        startActivity(intent)
     }
 
     //setting counter titles
