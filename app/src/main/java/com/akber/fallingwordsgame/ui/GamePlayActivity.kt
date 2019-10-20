@@ -2,12 +2,19 @@ package com.akber.fallingwordsgame.ui
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.akber.fallingwordsgame.R
+import com.akber.fallingwordsgame.constants.AppConstants
 import com.akber.fallingwordsgame.model.Word
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.counter_text.view.*
@@ -28,17 +35,33 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
     private var unAnsweredCount: Int = 0
     private var correctCount: Int = 0
     private var wrongCount: Int = 0
+    private var timer: MyCountDownTimer? = null
+    private val mCounterReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val counterValue = intent.getStringExtra("message")
+            updateCounterText(counterValue)
+        }
+    }
 
+    //unregistering the broadcast receiver
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mCounterReceiver)
+        super.onDestroy()
+    }
 
+    //saving state of timer & animation
     override fun onPause() {
         super.onPause()
+        timer?.pauseTimer()
         objectAnimator?.isRunning.let {
             objectAnimator?.pause()
         }
     }
 
+    //resuming state of timer & animation
     override fun onResume() {
         super.onResume()
+        timer?.resumeTimer()
         objectAnimator?.isRunning.let {
             objectAnimator?.resume()
         }
@@ -79,6 +102,14 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         initViewsState()
         initAnimation()
+        initializeTimer()
+        setObservers()
+
+        intent?.let {
+            toLearnEnglish = it.getBooleanExtra(ARG_LEARN_ENG, true)
+        }
+
+        mViewModel.fetchWords()
 
     }
 
@@ -233,6 +264,26 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
         failure_counter_layout.counter_text.text = getString(R.string.wrongTitle)
         unAnswered_counter_layout.counter_text.text = getString(R.string.missedTitle)
 
+    }
+
+    //set observers for ui
+    private fun setObservers() {
+        mViewModel.getWordsLiveData()?.observe(this, Observer { words ->
+            words?.let {
+                initializeWords(words)
+                setNewWord()
+            }
+        })
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            mCounterReceiver,
+            IntentFilter(AppConstants.FILTER_ON_TICK)
+        )
+    }
+
+
+    //initialize timer first time
+    private fun initializeTimer() {
+        timer = MyCountDownTimer.getInstance(this)
     }
 
     //initialize floating animation first time
