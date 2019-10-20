@@ -1,5 +1,6 @@
 package com.akber.fallingwordsgame.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startGame(toLearnSpanish: Boolean) {
-
+        val intent = Intent(this@HomeActivity, GamePlayActivity::class.java)
+        intent.putExtra(GamePlayActivity.ARG_LEARN_ENG, !toLearnSpanish)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

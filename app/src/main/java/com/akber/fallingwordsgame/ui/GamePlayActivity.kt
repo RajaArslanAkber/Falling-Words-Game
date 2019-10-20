@@ -9,6 +9,8 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -164,6 +166,7 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
     //get the next unique word for game, randomly picked from data set
     //logic limited right now
     private fun getRandomUniqueWord(isForTranslation: Boolean): Word {
+
         val random = Random(System.currentTimeMillis())
         var index: Int
         do {
@@ -195,7 +198,7 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
 
     //set the next word's translation, also having logic of which learning you choose
     private fun setNewTranslationWord() {
-        if(toLearnEnglish) {
+        if (toLearnEnglish) {
             currentTranslationOption = getNextTranslation().word2
         } else {
             currentTranslationOption = getNextTranslation().word1
@@ -254,12 +257,14 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
         startResultActivity()
         finish()
     }
+
     private fun startResultActivity() {
 
     }
 
     //setting counter titles
     private fun initViewsState() {
+        parentLayout.visibility = GONE
         success_counter_layout.counter_text.text = getString(R.string.correctTitle)
         failure_counter_layout.counter_text.text = getString(R.string.wrongTitle)
         unAnswered_counter_layout.counter_text.text = getString(R.string.missedTitle)
@@ -270,6 +275,7 @@ open class GamePlayActivity : AppCompatActivity(), View.OnClickListener, Animato
     private fun setObservers() {
         mViewModel.getWordsLiveData()?.observe(this, Observer { words ->
             words?.let {
+                parentLayout.visibility = VISIBLE
                 initializeWords(words)
                 setNewWord()
             }
